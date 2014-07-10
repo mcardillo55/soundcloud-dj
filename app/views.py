@@ -21,13 +21,17 @@ def playlistAPI():
 	return jsonify(data)
 
 def getSongs():
-	songDict = {}
-	for u in Song.query.all():
-		songDict[u.id] = u.url
-	return songDict
+	songList = []
+	for song in Song.query.all():
+		songDict = {"id": song.id, "url": song.url}
+		songList.append(songDict.copy())
+	data = {
+		"songList": songList
+	}
+	return data
 
 def postSong():
-	url = request.form['url']
+	url = request.json.get('url')
 	db.session.add(Song(url=url))
 	db.session.commit()
 	data = {

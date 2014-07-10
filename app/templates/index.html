@@ -1,15 +1,17 @@
-<html>
-<body>
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+  <script src="http://127.0.0.1:5000/static/angular.min.js"></script>
+  <script src="http://127.0.0.1:5000/static/app.js"></script>
+</head>
+<body ng-controller="djController">
 	<ul>
-		{% for song in songs %}
-		<li> {{song.url}} </li>
-		{% endfor %}
+		<li ng-repeat="song in songList">[[ song.url ]]</li>
 	</ul>
 
-	<form action="" method="post" name="submission">
-	{{form.hidden_tag()}}
-	{{form.subURL()}}
-	<input type="submit" value="Submit">
+	<form>
+		<input type="text" ng-model="url">
+		<button type="button" ng-click="addSong()">Add New Song</button>
 	</form>
 </body>
 </html>
