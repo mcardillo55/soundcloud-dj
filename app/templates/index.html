@@ -1,0 +1,15 @@
+<html>
+<body>
+	<ul>
+		{% for song in songs %}
+		<li> {{song.url}} </li>
+		{% endfor %}
+	</ul>
+
+	<form action="" method="post" name="submission">
+	{{form.hidden_tag()}}
+	{{form.subURL()}}
+	<input type="submit" value="Submit">
+	</form>
+</body>
+</html>
