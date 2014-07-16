@@ -1,3 +1,5 @@
+import urllib2
+import json
 from flask import render_template, request, jsonify
 from app import app, db
 from forms import SubmissionForm
@@ -23,7 +25,7 @@ def playlistAPI():
 def getSongs():
 	songList = []
 	for song in Song.query.all():
-		songDict = {"id": song.id, "url": song.url}
+		songDict = {"id": song.id, "url": song.url, "title": song.title}
 		songList.append(songDict.copy())
 	data = {
 		"songList": songList
@@ -32,9 +34,21 @@ def getSongs():
 
 def postSong():
 	url = request.json.get('url')
-	db.session.add(Song(url=url))
+	title = findTitle(url)
+	newSong = Song(url=url, title=title)
+	db.session.add(newSong)
 	db.session.commit()
 	data = {
-		"success": True
+		"success": True,
+		"data": {
+			"id": newSong.id, 
+			"url": newSong.url,
+			"title": newSong.title
+			}
 	}
 	return data
+
+def findTitle(url):
+	response = urllib2.urlopen("http://soundcloud.com/oembed?url=" + url + "&format=json")
+	soundcloudData = json.load(response)
+	return soundcloudData['title']
