@@ -3,6 +3,7 @@
 <head>
   <script src="http://127.0.0.1:5000/static/angular.min.js"></script>
   <script src="http://127.0.0.1:5000/static/app.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://127.0.0.1:5000/static/bootstrap.css">
   <link rel="stylesheet" type="text/css" href="http://127.0.0.1:5000/static/style.css">
 </head>
 <body ng-controller="djController">
@@ -20,7 +21,7 @@
         <div class="song-adder">
         	<form>
         		<input type="text" id="url-input" ng-model="url">
-        		<button type="button" ng-click="addSong()">Add New Song</button>
+        		<button type="button" class="btn btn-default" ng-click="addSong()">Add New Song</button>
         	</form>
         </div>
     </div>

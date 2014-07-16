@@ -1,24 +1,52 @@
 .container {
-    width: 825px;
-    height: 500px;
+    border-width: 2px;
+    border-color: #403E39;
+    border-radius: 10px;
+    border-style: solid;
+    margin-top: 80px;
+    width: 1010px;
+    height: 590px;
+    background-color: #FFFFFF;
+    padding-top: 45px;
 }
 
 .song-list {
-    width: 400px;
+    border-width: 1px;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: #403E39;
+    margin-left: 10px;
+    padding-right: 20px;
+    width: 500px;
     height: 500px;
     float: left;
     overflow-y: scroll;
 }
 
 .player-wrapper {
+    padding-left: 25px;
     float: left;
 }
 
 .song-adder {
+    padding-top: 20px;
+    padding-right: 10px;
     float: right;
-    clear: right;
+
 }
 
 #url-input {
-    width: 300px;
+    width: 310px;
+}
+
+a {
+    color: #73A6A2;
+}
+
+a:hover{
+    color: #403E39;
+}
+
+body {
+    background-color: #FF9A8C;
 }
