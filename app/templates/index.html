@@ -2,6 +2,7 @@
 <html ng-app="app">
 <head>
   <script src="http://127.0.0.1:5000/static/angular.min.js"></script>
+  <script src="http://127.0.0.1:5000/static/soundcloud-api.js"></script>
   <script src="http://127.0.0.1:5000/static/app.js"></script>
   <link rel="stylesheet" type="text/css" href="http://127.0.0.1:5000/static/bootstrap.css">
   <link rel="stylesheet" type="text/css" href="http://127.0.0.1:5000/static/style.css">
@@ -10,12 +11,12 @@
     <div class="container">
         <div class="song-list">
         	<ul>
-        		<a ng-click="changeSong(song.id)" ng-repeat="song in songList"><li>[[ song.title ]]</li></a>
+        		<a ng-click="changeSong(song.id)" ng-repeat="song in songList"><li ng-class="{activeSong:song.id==curSongId}">[[ song.title ]]</li></a>
         	</ul>
         </div>
 
         <div class="player-wrapper">
-            <iframe width="420" height="450" scrolling="no" frameborder="no" ng-src="[[ playerUrl ]]"></iframe>
+            <iframe id="myPlayer" width="420" height="450" scrolling="no" frameborder="no" ng-src="[[ playerUrl ]]"></iframe>
         </div>
 
         <div class="song-adder">

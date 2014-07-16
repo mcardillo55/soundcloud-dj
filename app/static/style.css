@@ -35,6 +35,10 @@
 
 }
 
+.activeSong {
+    background-color: #E5EBEB;
+}
+
 #url-input {
     width: 310px;
 }
@@ -47,6 +51,11 @@ a:hover{
     color: #403E39;
 }
 
+ul {
+    list-style-type: none;
+    padding-left: 15px;
+}
+
 body {
-    background-color: #FF9A8C;
+    background-color: #73A6A2;
 }
