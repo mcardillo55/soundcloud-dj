@@ -5,13 +5,22 @@
   <script src="http://127.0.0.1:5000/static/app.js"></script>
 </head>
 <body ng-controller="djController">
-	<ul>
-		<li ng-repeat="song in songList">[[ song.url ]]</li>
-	</ul>
+    <div class="container">
+        <div class="songList">
+        	<ul>
+        		<a ng-click="changeSong(song.id)" ng-repeat="song in songList"><li>[[ song.url ]]</li></a>
+        	</ul>
+        </div>
 
-	<form>
-		<input type="text" ng-model="url">
-		<button type="button" ng-click="addSong()">Add New Song</button>
-	</form>
+        <div class="playerWrapper" ng-bind-html="songEmbed">
+        </div>
+
+        <div class="songAdder">
+        	<form>
+        		<input type="text" ng-model="url">
+        		<button type="button" ng-click="addSong()">Add New Song</button>
+        	</form>
+        </div>
+    </div>
 </body>
 </html>
