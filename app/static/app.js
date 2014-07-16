@@ -23,18 +23,26 @@ app.controller('djController', [
 		})
 
 		$scope.addSong = function () {
-			data = {
-				"url": $scope.url,
-			};
-			$http.post("http://127.0.0.1:5000/api/playlist", data)
-			.success(function (response) {
-				$scope.songList.push({"id":response.data.id, "url":$scope.url, "title": response.data.title});
-			})
+			newUrl = $scope.url;
+			if (newUrl.indexOf("soundcloud") > -1 || newUrl.indexOf("youtube") > -1) {
+				data = {
+					"url": $scope.url,
+				};
+				$http.post("http://127.0.0.1:5000/api/playlist", data)
+				.success(function (response) {
+					$scope.songList.push({"id":response.data.id, "url":response.data.url, "title": response.data.title});
+				})
+			}
 		};
 
 		$scope.changeSong = function (songId) {
-			var newSong =  $scope.songList[songId - 1];
-			$scope.playerUrl = $sce.trustAsResourceUrl('https://w.soundcloud.com/player/?url=' + newSong.url + '&amp;auto_play=true&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true');
+			newSong =  $scope.songList[songId - 1];
+			if (newSong.url.indexOf("soundcloud") > -1) {
+				$scope.playerUrl = $sce.trustAsResourceUrl('https://w.soundcloud.com/player/?url=' + newSong.url + '&amp;auto_play=true&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true');
+			} else if (newSong.url.indexOf("youtube") > -1) {
+				$scope.playerUrl = $sce.trustAsResourceUrl(newSong.url + "?autoplay=1");
+				console.log($scope.playerUrl);
+			}
 		};
 	}
 ]);

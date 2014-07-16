@@ -35,6 +35,8 @@ def getSongs():
 def postSong():
 	url = request.json.get('url')
 	title = findTitle(url)
+	if "youtube" in url:
+		url = "//www.youtube.com/embed/" + getYoutubeId(url)
 	newSong = Song(url=url, title=title)
 	db.session.add(newSong)
 	db.session.commit()
@@ -49,6 +51,19 @@ def postSong():
 	return data
 
 def findTitle(url):
-	response = urllib2.urlopen("http://soundcloud.com/oembed?url=" + url + "&format=json")
-	soundcloudData = json.load(response)
-	return soundcloudData['title']
+	if "soundcloud" in url:
+		response = urllib2.urlopen("http://soundcloud.com/oembed?url=" + url + "&format=json")
+		soundcloudData = json.load(response)
+		return soundcloudData.get('title')
+	elif "youtube" in url:
+		response = urllib2.urlopen("https://gdata.youtube.com/feeds/api/videos/" + getYoutubeId(url) + "?v=2&alt=json")
+		youtubeData = json.load(response)
+		return youtubeData.get('entry').get('title').get("$t")
+
+def getYoutubeId(url):
+	'''extract youtube id from url '''
+	youtubeId = url[url.find("v=") + 2:]
+	ampLoc = youtubeId.find("&")
+	if ampLoc > -1:
+		youtubeId = youtubeId[:ampLoc]
+	return youtubeId
