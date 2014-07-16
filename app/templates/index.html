@@ -7,19 +7,19 @@
 </head>
 <body ng-controller="djController">
     <div class="container">
-        <div class="songList">
+        <div class="song-list">
         	<ul>
         		<a ng-click="changeSong(song.id)" ng-repeat="song in songList"><li>[[ song.title ]]</li></a>
         	</ul>
         </div>
 
-        <div class="playerWrapper">
+        <div class="player-wrapper">
             <iframe width="420" height="450" scrolling="no" frameborder="no" ng-src="[[ playerUrl ]]"></iframe>
         </div>
 
-        <div class="songAdder">
+        <div class="song-adder">
         	<form>
-        		<input type="text" ng-model="url">
+        		<input type="text" id="url-input" ng-model="url">
         		<button type="button" ng-click="addSong()">Add New Song</button>
         	</form>
         </div>

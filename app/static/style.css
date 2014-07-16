@@ -3,18 +3,22 @@
     height: 500px;
 }
 
-.songList {
+.song-list {
     width: 400px;
     height: 500px;
     float: left;
     overflow-y: scroll;
 }
 
-.playerWrapper {
+.player-wrapper {
     float: left;
 }
 
-.songAdder {
+.song-adder {
     float: right;
     clear: right;
+}
+
+#url-input {
+    width: 300px;
 }
