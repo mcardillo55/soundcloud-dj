@@ -1,0 +1,20 @@
+.container {
+    width: 825px;
+    height: 500px;
+}
+
+.songList {
+    width: 400px;
+    height: 500px;
+    float: left;
+    overflow-y: scroll;
+}
+
+.playerWrapper {
+    float: left;
+}
+
+.songAdder {
+    float: right;
+    clear: right;
+}
