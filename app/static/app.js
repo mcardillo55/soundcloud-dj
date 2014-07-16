@@ -34,7 +34,7 @@ app.controller('djController', [
 
 		$scope.changeSong = function (songId) {
 			var newSong =  $scope.songList[songId - 1];
-			$scope.songEmbed = $sce.trustAsHtml('<iframe width=“420” height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=' + newSong.url + '&amp;auto_play=true&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>');
+			$scope.playerUrl = $sce.trustAsResourceUrl('https://w.soundcloud.com/player/?url=' + newSong.url + '&amp;auto_play=true&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true');
 		};
 	}
 ]);
