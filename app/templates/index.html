@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="app">
+<html ng-app="app" ng-controller="djController">
 <head>
   <script src="{{ host }}/static/js/angular.min.js"></script>
   <script src="{{ host }}/static/js/soundcloud-api.js"></script>
@@ -7,15 +7,16 @@
   <script src="{{ host }}/static/js/app.js"></script>
   <link rel="stylesheet" type="text/css" href="{{ host }}/static/css/bootstrap.css">
   <link rel="stylesheet" type="text/css" href="{{ host }}/static/css/style.css">
+  <title>[[ curSong.title ]] | Shipfam Radio</title>
 </head>
-<body ng-controller="djController">
+<body>
     <div class="alert-container">
         <div class="alert alert-warning alert-dismissible" role="alert" ng-show="flash"><strong>[[ flash ]]</strong></div>
     </div>
     <div class="container">
         <div class="song-list">
         	<ul>
-        		<a ng-click="changeSong(song.id)" ng-repeat="song in songList"><li ng-class="{activeSong:song.id==curSongId}">[[ song.title ]]</li></a>
+        		<a ng-click="changeSong(song.id)" ng-repeat="song in songList"><li ng-class="{activeSong:song.id==curSong.id}">[[ song.title ]]</li></a>
         	</ul>
         </div>
 

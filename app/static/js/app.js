@@ -66,7 +66,7 @@ app.controller('djController', [
 					});
 				}, 1000);
 			}
-			$scope.curSongId = songId;
+			$scope.curSong = newSong;
 		};
 
 		$scope.flashMessage = function (message) {
