@@ -33,29 +33,41 @@ def getSongs():
 def postSong():
     url = request.json.get('url')
     title = findTitle(url)
-    if "youtube" in url:
-        url = "//www.youtube.com/embed/" + getYoutubeId(url)
-    newSong = Song(url=url, title=title)
-    db.session.add(newSong)
-    db.session.commit()
-    data = {
-        "success": True,
-        "data": {
-            "id": newSong.id,
-            "url": newSong.url,
-            "title": newSong.title
-            }
-    }
+    if title is None:
+        data = {
+            "success": False
+        }
+    else:
+        if "youtube" in url:
+            url = "//www.youtube.com/embed/" + getYoutubeId(url)
+        newSong = Song(url=url, title=title)
+        db.session.add(newSong)
+        db.session.commit()
+        data = {
+            "success": True,
+            "data": {
+                "id": newSong.id,
+                "url": newSong.url,
+                "title": newSong.title
+                }
+        }
+    print data
     return data
 
 
 def findTitle(url):
     if "soundcloud" in url:
-        response = urllib2.urlopen("http://soundcloud.com/oembed?url=" + url + "&format=json")
+        try:
+            response = urllib2.urlopen("http://soundcloud.com/oembed?url=" + url + "&format=json")
+        except urllib2.HTTPError:
+            return None
         soundcloudData = json.load(response)
         return soundcloudData.get('title')
     elif "youtube" in url:
-        response = urllib2.urlopen("https://gdata.youtube.com/feeds/api/videos/" + getYoutubeId(url) + "?v=2&alt=json")
+        try:
+            response = urllib2.urlopen("https://gdata.youtube.com/feeds/api/videos/" + getYoutubeId(url) + "?v=2&alt=json")
+        except urllib2.HTTPError:
+            return None
         youtubeData = json.load(response)
         return youtubeData.get('entry').get('title').get("$t")
 
