@@ -4,10 +4,11 @@ from flask import render_template, request, jsonify
 from app import app, db
 from models import Song
 
+HOSTNAME = app.config['HOSTNAME']
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template("index.html", songs=Song.query.all())
+    return render_template("index.html", songs=Song.query.all(), host=HOSTNAME)
 
 
 @app.route('/api/playlist', methods=['GET', 'POST'])

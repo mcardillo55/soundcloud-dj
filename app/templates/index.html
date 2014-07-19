@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html ng-app="app">
 <head>
-  <script src="http://127.0.0.1:5000/static/angular.min.js"></script>
-  <script src="http://127.0.0.1:5000/static/soundcloud-api.js"></script>
-  <script src="http://127.0.0.1:5000/static/youtube-api.js"></script>
-  <script src="http://127.0.0.1:5000/static/app.js"></script>
-  <link rel="stylesheet" type="text/css" href="http://127.0.0.1:5000/static/bootstrap.css">
-  <link rel="stylesheet" type="text/css" href="http://127.0.0.1:5000/static/style.css">
+  <script src="{{ host }}/static/js/angular.min.js"></script>
+  <script src="{{ host }}/static/js/soundcloud-api.js"></script>
+  <script src="{{ host }}/static/js/youtube-api.js"></script>
+  <script src="{{ host }}/static/js/app.js"></script>
+  <link rel="stylesheet" type="text/css" href="{{ host }}/static/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="{{ host }}/static/css/style.css">
 </head>
 <body ng-controller="djController">
     <div class="alert-container">
