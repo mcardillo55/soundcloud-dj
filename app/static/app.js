@@ -13,6 +13,7 @@ app.controller('djController', [
 	"$timeout",
 	function($scope, $http, $sce, $timeout) {
 		$scope.url = "";
+		$scope.flash = "";
 
 		$http.get("http://127.0.0.1:5000/api/playlist")
 		.success(function (response) {
@@ -25,15 +26,18 @@ app.controller('djController', [
 
 		$scope.addSong = function () {
 			newUrl = $scope.url;
-			if (newUrl.indexOf("soundcloud") > -1 || newUrl.indexOf("youtube") > -1) {
-				data = {
-					"url": $scope.url,
-				};
-				$http.post("http://127.0.0.1:5000/api/playlist", data)
-				.success(function (response) {
+			data = {
+				"url": $scope.url,
+			};
+			$http.post("http://127.0.0.1:5000/api/playlist", data)
+			.success(function (response) {
+				if (response.success == true) {
 					$scope.songList.push({"id":response.data.id, "url":response.data.url, "title": response.data.title});
-				})
-			}
+				} else {
+					$scope.flashMessage(response.message);
+					console.log("invalid url");
+				}
+			})
 		};
 
 		$scope.changeSong = function (songId) {
@@ -64,6 +68,14 @@ app.controller('djController', [
 			}
 			$scope.curSongId = songId;
 		};
+
+		$scope.flashMessage = function (message) {
+			console.log("message set to" + message);
+			$scope.flash = message;
+			$timeout(function () {
+				$scope.flash = null;
+			}, 5000);
+		}
 	}
 ]);
 

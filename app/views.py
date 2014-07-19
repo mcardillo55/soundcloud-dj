@@ -31,18 +31,24 @@ def getSongs():
 
 
 def postSong():
+    data = {
+        "success": False
+    }
     url = request.json.get('url')
     title = findTitle(url)
     if title is None:
-        data = {
-            "success": False
-        }
+        data["message"] = "Invalid URL!";
+        return data
     else:
         if "youtube" in url:
             url = "//www.youtube.com/embed/" + getYoutubeId(url)
         newSong = Song(url=url, title=title)
         db.session.add(newSong)
-        db.session.commit()
+        try:
+            db.session.commit()
+        except:
+            data["message"] = "Song already in playlist!"
+            return data
         data = {
             "success": True,
             "data": {
@@ -51,7 +57,6 @@ def postSong():
                 "title": newSong.title
                 }
         }
-    print data
     return data
 
 
@@ -70,6 +75,7 @@ def findTitle(url):
             return None
         youtubeData = json.load(response)
         return youtubeData.get('entry').get('title').get("$t")
+    return None
 
 
 def getYoutubeId(url):

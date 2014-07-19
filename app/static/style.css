@@ -1,3 +1,10 @@
+.alert-container {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+}
+
 .container {
     border-width: 2px;
     border-color: #403E39;
