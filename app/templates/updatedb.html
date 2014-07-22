@@ -1,0 +1,53 @@
+<html>    
+  <head>
+    <div id="fb-root"></div>
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '1512194522326826',
+          xfbml      : true,
+          version    : 'v2.0',
+          status     : 'true'
+        });
+
+        facebookInit();
+      };
+
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "//connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+
+      function facebookInit () {
+          checkFbStatus();
+      }
+
+      function checkFbStatus() {
+        FB.getLoginStatus(function (response) {
+          console.log(response.status);
+            if (response.status == 'connected') { 
+                var accessToken = response.authResponse.accessToken;
+                document.getElementById('fb-login').style.display = 'none';
+                document.getElementById('status').innerHTML = "<a href=http://localhost:5000/updatedb/" + 
+                accessToken + ">Click to update database</a>";  
+            } else {
+                document.getElementById('fb-login').style.display = 'block';
+                document.getElementById('status').innerHTML = "Please log in";
+            }
+            console.log(accessToken);
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <span id="fb-login">
+      <fb:login-button scope="user_groups" onlogin="checkFbStatus();">
+      </fb:login-button>
+    </span>
+    <div id="status">
+    </div>
+  </body>
+</html>
