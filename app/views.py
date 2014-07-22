@@ -6,6 +6,7 @@ from models import Song
 
 HOSTNAME = app.config['HOSTNAME']
 
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     return render_template("index.html", songs=Song.query.all(), host=HOSTNAME)
@@ -31,14 +32,15 @@ def getSongs():
     return data
 
 
-def postSong():
+def postSong(url=None):
     data = {
         "success": False
     }
-    url = request.json.get('url')
+    if url is None:
+        url = request.json.get('url')
     title = findTitle(url)
     if title is None:
-        data["message"] = "Invalid URL!";
+        data["message"] = "Invalid URL!"
         return data
     else:
         if "youtube" in url:
@@ -64,7 +66,7 @@ def postSong():
 def findTitle(url):
     if "soundcloud" in url:
         try:
-            response = urllib2.urlopen("http://soundcloud.com/oembed?url=" + url + "&format=json")
+            response = urllib2.urlopen("http://soundcloud.com/oembed?url=" + cleanSoundcloudUrl(url) + "&format=json")
         except urllib2.HTTPError:
             return None
         soundcloudData = json.load(response)
@@ -79,6 +81,10 @@ def findTitle(url):
     return None
 
 
+def cleanSoundcloudUrl(url):
+    return url.split("#")[0]
+
+
 def getYoutubeId(url):
     '''extract youtube id from url '''
     youtubeId = url[url.find("v=") + 2:]
@@ -86,3 +92,18 @@ def getYoutubeId(url):
     if ampLoc > -1:
         youtubeId = youtubeId[:ampLoc]
     return youtubeId
+
+
+@app.route('/updatedb/<accessToken>', methods=['GET'])
+def grabFeed(accessToken):
+    groupFeed = json.load(urllib2.urlopen("https://graph.facebook.com/518171768298214/feed?limit=100&access_token=" + accessToken))
+    for post in groupFeed.get('data'):
+        if post.get('link'):
+            postSong(url=post.get('link'))
+            print post.get('link')
+    return "Database updated!"
+
+
+@app.route('/updatedb', methods=['GET'])
+def updatedb():
+    return render_template("updatedb.html")
