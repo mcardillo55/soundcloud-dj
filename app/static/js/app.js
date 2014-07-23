@@ -15,12 +15,13 @@ app.controller('djController', [
 		$scope.url = "";
 		$scope.flash = "";
 
-		$http.get("http://127.0.0.1:5000/api/playlist")
+		$http.get(host + "/api/playlist")
 		.success(function (response) {
 			$scope.songList = response.songList;
 			//if list is populated, start playing first track
 			if($scope.songList.length > 0) {
-				$scope.changeSong($scope.songList[0].id);
+				rand = Math.floor(Math.random() * $scope.songList.length);
+				$scope.changeSong($scope.songList[rand].id);
 			}
 		})
 
@@ -29,7 +30,7 @@ app.controller('djController', [
 			data = {
 				"url": $scope.url,
 			};
-			$http.post("http://127.0.0.1:5000/api/playlist", data)
+			$http.post(host + "/api/playlist", data)
 			.success(function (response) {
 				if (response.success == true) {
 					$scope.songList.push({"id":response.data.id, "url":response.data.url, "title": response.data.title});
@@ -54,7 +55,7 @@ app.controller('djController', [
 						})
 					}, 1000);
 			} else if (newSong.url.indexOf("youtube") > -1) {
-				$scope.playerUrl = $sce.trustAsResourceUrl(newSong.url + "?enablejsapi=1&autoplay=1&origin=http://127.0.0.1:5000");
+				$scope.playerUrl = $sce.trustAsResourceUrl(newSong.url + "?enablejsapi=1&autoplay=1&origin=" + host);
 				//temporary? hack to bind youtube listener after DOM update
 				$timeout(function() {
 					new YT.Player('myPlayer').addEventListener('onStateChange', function(event){
