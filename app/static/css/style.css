@@ -13,11 +13,12 @@
     margin-top: 80px;
     width: 1010px;
     height: 590px;
-    background-color: #FFFFFF;
+    background-color: #0096CB;
     padding-top: 45px;
 }
 
 .song-list {
+    background-color: #FFFFFF;
     border-width: 1px;
     border-radius: 5px;
     border-style: solid;
@@ -64,5 +65,5 @@ ul {
 }
 
 body {
-    background-color: #73A6A2;
+    background-color: #00C3E6;
 }
