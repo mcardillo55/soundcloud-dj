@@ -10,7 +10,8 @@
     border-color: #403E39;
     border-radius: 10px;
     border-style: solid;
-    margin-top: 80px;
+    margin-top: 50px;
+    margin-bottom: 100px;
     width: 1010px;
     height: 590px;
     background-color: #0096CB;
@@ -40,7 +41,14 @@
     padding-top: 20px;
     padding-right: 10px;
     float: right;
+}
 
+.site-title {
+    color: white;
+    font-size: 700%;
+    font-weight: bold;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black, 0.045em 0.045em yellow;
+    text-align: center;
 }
 
 .activeSong {
@@ -49,6 +57,12 @@
 
 #url-input {
     width: 310px;
+}
+
+#ribbon {
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
 a {
