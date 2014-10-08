@@ -1,13 +1,27 @@
 <!DOCTYPE html>
 <html ng-app="app" ng-controller="djController">
 <head>
-  <script>var host = "{{ host }}"</script>
-  <script src="{{ host }}/static/js/angular.min.js"></script>
-  <script src="{{ host }}/static/js/soundcloud-api.js"></script>
-  <script src="{{ host }}/static/js/youtube-api.js"></script>
-  <script src="{{ host }}/static/js/app.js"></script>
-  <link rel="stylesheet" type="text/css" href="{{ host }}/static/css/bootstrap.css">
-  <link rel="stylesheet" type="text/css" href="{{ host }}/static/css/style.css">
+  <script>var host = "{{ config.HOSTNAME }}"</script>
+  <script src="{{ config.HOSTNAME }}/static/js/angular.min.js"></script>
+  <script src="{{ config.HOSTNAME }}/static/js/soundcloud-api.js"></script>
+  <script src="{{ config.HOSTNAME }}/static/js/youtube-api.js"></script>
+{% if config.PRODUCTION %}
+  <script src="{{ config.HOSTNAME }}/static/js/app.min.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-34924743-5', 'auto');
+  ga('send', 'pageview');
+
+</script>
+{% else %}
+  <script src="{{ config.HOSTNAME }}/static/js/app.js"></script>
+{% endif %}
+  <link rel="stylesheet" type="text/css" href="{{ config.HOSTNAME }}/static/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="{{ config.HOSTNAME }}/static/css/style.css">
   <title>[[ curSong.title ]] | Shipfam Radio</title>
 </head>
 <body>

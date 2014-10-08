@@ -31,7 +31,7 @@
             if (response.status == 'connected') { 
                 var accessToken = response.authResponse.accessToken;
                 document.getElementById('fb-login').style.display = 'none';
-                document.getElementById('status').innerHTML = "<a href=http://localhost:5000/updatedb/" + 
+                document.getElementById('status').innerHTML = "<a href={{ config.HOSTNAME }}/updatedb/" + 
                 accessToken + ">Click to update database</a>";  
             } else {
                 document.getElementById('fb-login').style.display = 'block';
