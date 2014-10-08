@@ -51,6 +51,7 @@ def postSong(url=None):
             db.session.commit()
         except:
             data["message"] = "Song already in playlist!"
+            db.session.rollback()
             return data
         data = {
             "success": True,
