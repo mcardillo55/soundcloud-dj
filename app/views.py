@@ -97,12 +97,12 @@ def getYoutubeId(url):
 
 @app.route('/updatedb/<accessToken>', methods=['GET'])
 def grabFeed(accessToken):
+    results = []
     groupFeed = json.load(urllib2.urlopen("https://graph.facebook.com/518171768298214/feed?limit=100&access_token=" + accessToken))
     for post in groupFeed.get('data'):
         if post.get('link'):
-            postSong(url=post.get('link'))
-            print post.get('link')
-    return "Database updated!"
+            results.append({'url': post.get('link'), 'status': postSong(url=post.get('link'))})
+    return jsonify(results = results)
 
 
 @app.route('/updatedb', methods=['GET'])
