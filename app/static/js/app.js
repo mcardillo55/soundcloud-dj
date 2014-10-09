@@ -17,7 +17,7 @@ app.controller('djController', [
 
 		$http.get(host + "/api/playlist")
 		.success(function (response) {
-			$scope.songList = response.songList;
+			$scope.songList = response.songList.reverse();
 			//if list is populated, start playing first track
 			if($scope.songList.length > 0) {
 				rand = Math.floor(Math.random() * $scope.songList.length);
@@ -42,7 +42,12 @@ app.controller('djController', [
 		};
 
 		$scope.changeSong = function (songId) {
-			newSong =  $scope.songList[songId - 1];
+			for (index = 0; index < $scope.songList.length; index++){
+				if ($scope.songList[index].id == songId) {
+					newSong =  $scope.songList[index];
+					break;
+				}
+			}
 			if (newSong.url.indexOf("soundcloud") > -1) {
 				$scope.playerUrl = $sce.trustAsResourceUrl('https://w.soundcloud.com/player/?url=' + newSong.url + '&auto_play=true&visual=true');
 				//temporary? hack to bind soundcloud listener after DOM update
