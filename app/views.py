@@ -95,12 +95,18 @@ def getYoutubeId(url):
 
 @app.route('/updatedb/<accessToken>', methods=['GET'])
 def grabFeed(accessToken):
-    results = []
-    groupFeed = json.load(urllib2.urlopen("https://graph.facebook.com/518171768298214/feed?limit=100&access_token=" + accessToken))
-    for post in groupFeed.get('data'):
-        if post.get('link'):
-            results.append({'url': post.get('link'), 'status': postSong(url=post.get('link'))})
-    return jsonify(results = results)
+    '''facebook api returns a 400 error instead of json in case of invalid token'''
+    try:
+        groupFeed = json.load(urllib2.urlopen("https://graph.facebook.com/518171768298214/feed?limit=100&access_token=" + accessToken))
+    except urllib2.HTTPError, e:
+        results = {'success': False, 'reason': e.reason, 'code': e.code}
+    else:
+        results = []
+        for post in groupFeed.get('data'):
+            if post.get('link'):
+                results.append({'url': post.get('link'), 'status': postSong(url=post.get('link'))})
+        results = {'success': True, 'results': results}
+    return jsonify(results)
 
 
 @app.route('/updatedb', methods=['GET'])
