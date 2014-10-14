@@ -5,6 +5,7 @@
   <script src="{{ config.HOSTNAME }}/static/js/angular.min.js"></script>
   <script src="{{ config.HOSTNAME }}/static/js/soundcloud-api.js"></script>
   <script src="{{ config.HOSTNAME }}/static/js/youtube-api.js"></script>
+  <script src="{{ config.HOSTNAME }}/static/js/socket.io.min.js"></script>
 {% if config.PRODUCTION %}
   <script src="{{ config.HOSTNAME }}/static/js/app.min.js"></script>
 <script>
@@ -12,10 +13,8 @@
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
   ga('create', 'UA-34924743-5', 'auto');
   ga('send', 'pageview');
-
 </script>
 {% else %}
   <script src="{{ config.HOSTNAME }}/static/js/app.js"></script>

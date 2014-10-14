@@ -1,7 +1,7 @@
 import urllib2
 import json
 from flask import render_template, request, jsonify
-from app import app, db
+from app import app, db, socketio
 from models import Song
 
 
@@ -59,6 +59,7 @@ def postSong(url=None):
                 "title": newSong.title
                 }
         }
+    socketio.emit('new-song', data['data'])
     return data
 
 
@@ -112,3 +113,8 @@ def grabFeed(accessToken):
 @app.route('/updatedb', methods=['GET'])
 def updatedb():
     return render_template("updatedb.html")
+
+
+@socketio.on('connect')
+def onConnect():
+    pass

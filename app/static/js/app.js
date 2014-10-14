@@ -1,4 +1,11 @@
 var app;
+var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+socket.on('connect', function() {
+	//needed for client to recieve server messages
+    socket.emit('connect');
+});
+
 app = angular.module("app", [])
 .config(function($interpolateProvider) {
   // replaces {{ }} with [[ ]] to differentiate from jinja
@@ -14,6 +21,12 @@ app.controller('djController', [
 	function($scope, $http, $sce, $timeout) {
 		$scope.url = "";
 		$scope.flash = "";
+
+		socket.on('new-song', function (data) {
+    		$scope.songList.unshift(data);
+    		$scope.$apply();
+		});
+
 
 		$http.get(host + "/api/playlist")
 		.success(function (response) {
