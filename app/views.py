@@ -11,17 +11,23 @@ def index():
 
 
 @app.route('/api/playlist', methods=['GET', 'POST'])
-def playlistAPI():
+@app.route('/api/playlist/<start>', methods=['GET', 'POST'])
+def playlistAPI(start=False):
     if request.method == 'GET':
-        data = getSongs()
+        data = getSongs(start)
     if request.method == 'POST':
         data = postSong()
     return jsonify(data)
 
 
-def getSongs():
+def getSongs(start=False):
+    '''Grabs 50 songs at once, optionally starting at id < "start"'''
     songList = []
-    for song in Song.query.all():
+    if start:
+        query = Song.query.order_by(Song.id.desc()).filter(Song.id < start).limit(50).all()
+    else:
+        query = Song.query.order_by(Song.id.desc()).limit(50).all()       
+    for song in query:
         songDict = {"id": song.id, "url": song.url, "title": song.title}
         songList.append(songDict.copy())
     data = {

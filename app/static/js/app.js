@@ -30,13 +30,23 @@ app.controller('djController', [
 
 		$http.get(host + "/api/playlist")
 		.success(function (response) {
-			$scope.songList = response.songList.reverse();
+			$scope.responseLength = response.songList.length;
+			$scope.songList = response.songList;
 			//if list is populated, start playing first track
 			if($scope.songList.length > 0) {
 				rand = Math.floor(Math.random() * $scope.songList.length);
 				$scope.changeSong($scope.songList[rand].id);
 			}
 		})
+
+		$scope.loadSongs = function () {
+			last = $scope.songList[$scope.songList.length-1];
+			$http.get(host + "/api/playlist/" + last.id)
+			.success(function (response) {
+				$scope.responseLength = response.songList.length;
+				$scope.songList = $scope.songList.concat(response.songList);
+			})
+		};
 
 		$scope.addSong = function () {
 			newUrl = $scope.url;

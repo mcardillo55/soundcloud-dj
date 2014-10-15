@@ -36,6 +36,7 @@
         	<ul>
         		<a ng-click="changeSong(song.id)" ng-repeat="song in songList"><li ng-class="{activeSong:song.id==curSong.id}">[[ song.title ]]</li></a>
         	</ul>
+          <button id="load-button" type="button" class="btn btn-default center-block" ng-click="loadSongs()" ng-show="responseLength == 50">Load More...</button>
         </div>
 
         <div class="player-wrapper">
