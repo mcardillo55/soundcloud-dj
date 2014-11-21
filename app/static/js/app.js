@@ -27,6 +27,24 @@ app.controller('djController', [
     		$scope.$apply();
 		});
 
+		angular.element(document).ready(function () {
+			$scope.SCWidget = SC.Widget(SCPlayer);
+			$scope.SCWidget.bind(SC.Widget.Events.FINISH, 
+				function() { 
+					rand = Math.floor(Math.random() * $scope.songList.length);
+					$scope.changeSong($scope.songList[rand].id);
+					$scope.$apply();
+			});
+			$scope.YTWidget = new YT.Player('YTPlayer').addEventListener('onStateChange', function(event){
+				if (event.data == YT.PlayerState.ENDED) {
+					rand = Math.floor(Math.random() * $scope.songList.length);
+					$scope.changeSong($scope.songList[rand].id);
+					$scope.$apply();
+				}
+			});
+			console.log("players enabled");
+		});
+
 
 		$http.get(host + "/api/playlist")
 		.success(function (response) {
@@ -72,28 +90,19 @@ app.controller('djController', [
 				}
 			}
 			if (newSong.url.indexOf("soundcloud") > -1) {
-				$scope.playerUrl = $sce.trustAsResourceUrl('https://w.soundcloud.com/player/?url=' + newSong.url + '&auto_play=true&visual=true');
-				//temporary? hack to bind soundcloud listener after DOM update
-				$timeout(function() { 
-					SC.Widget(myPlayer).bind(SC.Widget.Events.FINISH, 
-						function() { 
-							rand = Math.floor(Math.random() * $scope.songList.length);
-							$scope.changeSong($scope.songList[rand].id);
-							$scope.$apply();
-						})
-					}, 1000);
+				YTPlayer.style.display="none";
+				SCPlayer.style.display="block";
+				if ($scope.YTWidget) {
+					$scope.YTWidget.pauseVideo();
+				}
+				$scope.SCUrl = $sce.trustAsResourceUrl('https://w.soundcloud.com/player/?url=' + newSong.url + '&auto_play=true&visual=true');
 			} else if (newSong.url.indexOf("youtube") > -1) {
-				$scope.playerUrl = $sce.trustAsResourceUrl(newSong.url + "?enablejsapi=1&autoplay=1&origin=" + host);
-				//temporary? hack to bind youtube listener after DOM update
-				$timeout(function() {
-					new YT.Player('myPlayer').addEventListener('onStateChange', function(event){
-						if (event.data == YT.PlayerState.ENDED) {
-							rand = Math.floor(Math.random() * $scope.songList.length);
-							$scope.changeSong($scope.songList[rand].id);
-							$scope.$apply();
-						}
-					});
-				}, 1000);
+				SCPlayer.style.display="none";
+				YTPlayer.style.display="block";
+				if ($scope.SCWidget) {
+					$scope.SCWidget.pause();
+				}
+				$scope.YTUrl = $sce.trustAsResourceUrl(newSong.url + "?enablejsapi=1&autoplay=1&origin=" + host);
 			}
 			$scope.curSong = newSong;
 		};
