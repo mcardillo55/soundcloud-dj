@@ -52,8 +52,9 @@
     text-align: center;
 }
 
-.activeSong {
-    background-color: #E5EBEB;
+.activeSong, .activeSong:hover {
+    color: #403E39;
+    background-color: #99FFFF;
 }
 
 #load-button {
@@ -77,13 +78,19 @@ a {
     color: #73A6A2;
 }
 
-a:hover{
+li:hover{
     color: #403E39;
+    background-color: #E5FFFF;
+}
+
+li {
+    padding-left: 15px;
+    width: 500px;
 }
 
 ul {
     list-style-type: none;
-    padding-left: 15px;
+    padding-left: 0px;
 }
 
 body {
