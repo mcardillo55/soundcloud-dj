@@ -35,6 +35,15 @@ def getSongs(start=False):
     }
     return data
 
+@app.route('/api/songs/', methods=['POST'])
+def postSongAuth():
+    token = request.form['token']
+    url = request.form['url']
+    if not token or token != 'secret':
+        return jsonify({'success': False, 'message': 'Missing or invalid token'})
+    elif not url:
+        return jsonify({'success': False, 'message': 'Missing URL'})
+    postSong(url)
 
 def postSong(url=None):
     data = {
