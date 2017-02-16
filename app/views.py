@@ -43,7 +43,8 @@ def postSongAuth():
         return jsonify({'success': False, 'message': 'Missing or invalid token'})
     elif not url:
         return jsonify({'success': False, 'message': 'Missing URL'})
-    postSong(url)
+    else:
+        return jsonify(postSong(url))
 
 def postSong(url=None):
     data = {
