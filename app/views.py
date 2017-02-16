@@ -82,18 +82,20 @@ def postSong(url=None):
 def findTitle(url):
     if "soundcloud" in url:
         try:
-            response = urllib2.urlopen("http://soundcloud.com/oembed?url=" + cleanSoundcloudUrl(url) + "&format=json")
+            response = urllib2.urlopen(app.config['SOUNDCLOUD_API_URL'] + '?url=' + cleanSoundcloudUrl(url) + "&format=json")
         except urllib2.HTTPError:
             return None
         soundcloudData = json.load(response)
         return soundcloudData.get('title')
     elif "youtube" in url:
         try:
-            response = urllib2.urlopen("https://gdata.youtube.com/feeds/api/videos/" + getYoutubeId(url) + "?v=2&alt=json")
+            response = urllib2.urlopen(app.config['YOUTUBE_API_URL'] + '?part=snippet&key=' + app.config['YOUTUBE_API_KEY'] + '&id=' + getYoutubeId(url))
         except urllib2.HTTPError:
             return None
         youtubeData = json.load(response)
-        return youtubeData.get('entry').get('title').get("$t")
+        youtubeQueryItems = youtubeData.get('items')
+        if len(youtubeQueryItems) > 0:
+            return youtubeQueryItems[0].get('snippet').get('title')
     return None
 
 
