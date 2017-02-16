@@ -25,5 +25,8 @@ page.onLoadFinished = function(status) {
 
 };
 
+page.onError = function(msg, trace) {
+};
+
 page.open('https://www.facebook.com/groups/518171768298214/', function(status) {
 });
