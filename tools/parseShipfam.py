@@ -4,6 +4,9 @@ from bs4 import BeautifulSoup
 from urlparse import urlparse, parse_qs
 import subprocess
 import requests
+import os, sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import config
 
 args = ['phantomjs', 'facebook.js']
 html = subprocess.check_output(args)
@@ -18,7 +21,7 @@ for href in allHref:
     if fb_u:
         if fb_u[0] not in urlList:
             urlList.append(fb_u[0])
-            r = requests.post('http://www.shipfamradio.com/api/songs/',
-                {'token': 'secret', 'url': fb_u[0]})
+            r = requests.post(config.HOSTNAME + '/api/songs/',
+                {'token': config.SECRET_KEY, 'url': fb_u[0]})
             print fb_u[0]
             print r.text
