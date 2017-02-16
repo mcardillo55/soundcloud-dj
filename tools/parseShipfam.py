@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from BeautifulSoup import BeautifulSoup
+from bs4 import BeautifulSoup
 from urlparse import urlparse, parse_qs
 import subprocess
 import requests
@@ -8,8 +8,8 @@ import requests
 args = ['phantomjs', 'facebook.js']
 html = subprocess.check_output(args)
 
-soup = BeautifulSoup(html)
-soup = soup.find('div', {'id':'contentArea'})
+soup = BeautifulSoup(html, 'html.parser')
+soup = soup.find(id='contentArea')
 allHref = soup.findAll(href=True)
 
 urlList = []
@@ -22,4 +22,3 @@ for href in allHref:
                 {'token': 'secret', 'url': fb_u[0]})
             print fb_u[0]
             print r.text
-
