@@ -26,7 +26,7 @@ def getSongs(start=False):
     if start:
         query = Song.query.order_by(Song.id.desc()).filter(Song.id < start).limit(50).all()
     else:
-        query = Song.query.order_by(Song.id.desc()).limit(50).all()       
+        query = Song.query.order_by(Song.id.desc()).limit(50).all()
     for song in query:
         songDict = {"id": song.id, "url": song.url, "title": song.title}
         songList.append(songDict.copy())
@@ -39,7 +39,7 @@ def getSongs(start=False):
 def postSongAuth():
     token = request.form['token']
     url = request.form['url']
-    if not token or token != 'secret':
+    if not token or token != app.config['SECRET_KEY']:
         return jsonify({'success': False, 'message': 'Missing or invalid token'})
     elif not url:
         return jsonify({'success': False, 'message': 'Missing URL'})
