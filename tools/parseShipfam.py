@@ -4,11 +4,12 @@ from bs4 import BeautifulSoup
 from urlparse import urlparse, parse_qs
 import subprocess
 import requests
-import os, sys
+import os
+import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import config
 
-args = ['phantomjs', 'facebook.js']
+args = ['casperjs', 'facebook.js']
 html = subprocess.check_output(args)
 
 soup = BeautifulSoup(html, 'html.parser')

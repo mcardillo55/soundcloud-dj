@@ -1,32 +1,22 @@
-/*facebook.py - this script should be run by phantomJS.
+/*facebook.py - this script should be run by casperJS.
 Navigate to the desired facebook page and it will log
 in with the provided credentials and dump the interpreted
 html to console */
+var casper = require('casper').create({verbose: false, logLevel: 'debug'});
 
-var page = new WebPage();
+casper.start('https://www.facebook.com/groups/518171768298214/', function() {
+    this.waitForSelector('form#login_form');
+});
 
-function doLogin(){
-    page.evaluate(function() {
-        var form = document.getElementById("login_form");
+casper.then(function() {
+    this.fill('form#login_form', {'email': '', 'pass': ''}, true);
+});
 
-        form.elements["email"].value = "";
-        form.elements["pass"].value = "";
+casper.then(function() {
+    this.waitForSelector('div#contentArea');
+});
 
-        form.submit();
-    });
-}
-
-page.onLoadFinished = function(status) {
-    doLogin();
-    window.setTimeout(function() {
-        console.log(page.content);
-        phantom.exit();
-    }, 20000);
-
-};
-
-page.onError = function(msg, trace) {
-};
-
-page.open('https://www.facebook.com/groups/518171768298214/', function(status) {
+casper.run(function() {
+    this.echo(casper.getHTML());
+    this.exit();
 });
