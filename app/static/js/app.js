@@ -50,9 +50,7 @@ app.controller('djController', [
 			};
 			$http.post(host + "/api/playlist", data)
 			.success(function (response) {
-				if (response.success == true) {
-					$scope.songList.push({"id":response.data.id, "url":response.data.url, "title": response.data.title});
-				} else {
+				if (response.success == false) {
 					$scope.flashMessage(response.message);
 					console.log("invalid url");
 				}
