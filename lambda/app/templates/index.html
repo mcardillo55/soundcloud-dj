@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html ng-app="app" ng-controller="djController">
+<head>
+  <script>var host = "{{ config.HOSTNAME }}"</script>
+{% if config.HOSTNAME %}
+  <script src="{{ config.HOSTNAME }}/static/js/min/app.min.js"></script>
+{% else %}
+  <script src="/static/js/angular.js"></script>
+  <script src="/static/js/soundcloud-api.js"></script>
+  <script src="/static/js/youtube-api.js"></script>
+  <script src="/static/js/app.js"></script>
+{% endif %}
+  <link rel="stylesheet" type="text/css" href="{{ config.HOSTNAME }}/static/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="{{ config.HOSTNAME }}/static/css/style.css">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <title>[[ curSong.title || "Loading..."]] | Shipfam Radio</title>
+</head>
+<body>
+    <div class="alert-container">
+        <div class="alert alert-warning alert-dismissible" role="alert" ng-show="flash"><strong>[[ flash ]]</strong></div>
+    </div>
+    <div class="site-title">SOUNDCLOUD DJ</div>
+    <div class="container">
+        <div class="song-list">
+        	<ul>
+        		<a ng-click="changeSong(song.id)" ng-repeat="song in songList"><li ng-class="{activeSong:song.id==curSong.id}">[[ song.title ]]</li></a>
+        	</ul>
+          <button id="load-button" type="button" class="btn btn-default center-block" ng-click="loadSongs()" ng-show="responseLength == 50">Load More...</button>
+        </div>
+
+        <div class="player-wrapper">
+            <iframe id="myPlayer" width="420" height="450" scrolling="no" frameborder="no" ng-src="[[ playerUrl ]]"></iframe>
+        </div>
+    </div>
+</body>
+</html>

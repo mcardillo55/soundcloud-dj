@@ -1,0 +1,98 @@
+.alert-container {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+}
+
+.container {
+    border-width: 2px;
+    border-color: #403E39;
+    border-radius: 10px;
+    border-style: solid;
+    margin-top: 30px;
+    margin-bottom: 100px;
+    width: 1010px;
+    height: 590px;
+    background-color: #0096CB;
+    padding-top: 45px;
+}
+
+.song-list {
+    background-color: #FFFFFF;
+    border-width: 1px;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: #403E39;
+    margin-left: 10px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    width: 500px;
+    height: 500px;
+    float: left;
+    overflow-y: scroll;
+}
+
+.player-wrapper {
+    padding-left: 25px;
+    float: left;
+}
+
+.song-adder {
+    padding-top: 20px;
+    padding-right: 10px;
+    float: right;
+}
+
+.site-title {
+    color: white;
+    font-size: 700%;
+    font-weight: bold;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black, 0.045em 0.045em yellow;
+    text-align: center;
+}
+
+.activeSong, .activeSong:hover {
+    color: #403E39;
+    background-color: #99FFFF;
+}
+
+#load-button {
+    color: #73A6A2;
+    font-size: 90%;
+    margin-top: 10px;
+    width: 300px;
+}
+
+#url-input {
+    width: 310px;
+}
+
+#ribbon {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+a {
+    color: #73A6A2;
+}
+
+li:hover{
+    color: #403E39;
+    background-color: #E5FFFF;
+}
+
+li {
+    padding-left: 15px;
+    width: 500px;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+body {
+    background-color: #00C3E6;
+}
